@@ -1,43 +1,56 @@
 @startuml
-!include style.puml
-skinparam arrowThickness 1.1
-skinparam arrowColor STORAGE_COLOR
-skinparam classBackgroundColor STORAGE_COLOR
 
-package Storage as StoragePackage {
-
-package "UserPrefs Storage" #F4F6F6{
-Class "<<interface>>\nUserPrefsStorage" as UserPrefsStorage
-Class JsonUserPrefsStorage
+interface Storage {
+    +Path getAddressBookFilePath()
+    +Optional<ReadOnlyAddressBook> readAddressBook()
+    +void saveAddressBook(ReadOnlyAddressBook)
+    +Optional<UserPrefs> readUserPrefs()
+    +void saveUserPrefs(ReadOnlyUserPrefs)
 }
 
-Class "<<interface>>\nStorage" as Storage
-Class StorageManager
-
-package "AddressBook Storage" #F4F6F6{
-Class "<<interface>>\nAddressBookStorage" as AddressBookStorage
-Class JsonAddressBookStorage
-Class JsonSerializableAddressBook
-Class JsonAdaptedClient
-Class JsonAdaptedTag
+interface AddressBookStorage {
+    +Path getAddressBookFilePath()
+    +Optional<ReadOnlyAddressBook> readAddressBook()
+    +Optional<ReadOnlyAddressBook> readAddressBook(Path)
+    +void saveAddressBook(ReadOnlyAddressBook)
+    +void saveAddressBook(ReadOnlyAddressBook, Path)
 }
 
+interface UserPrefsStorage {
+    +Path getUserPrefsFilePath()
+    +Optional<UserPrefs> readUserPrefs()
+    +void saveUserPrefs(ReadOnlyUserPrefs)
 }
 
-Class HiddenOutside #FFFFFF
-HiddenOutside ..> Storage
+class StorageManager {
+    -AddressBookStorage addressBookStorage
+    -UserPrefsStorage userPrefsStorage
+    +Optional<ReadOnlyAddressBook> readAddressBook()
+    +void saveAddressBook(ReadOnlyAddressBook)
+    +Optional<UserPrefs> readUserPrefs()
+    +void saveUserPrefs(ReadOnlyUserPrefs)
+}
 
-StorageManager .up.|> Storage
-StorageManager -up-> "1" UserPrefsStorage
-StorageManager -up-> "1" AddressBookStorage
+class JsonAddressBookStorage {
+    -Path filePath
+    +Optional<ReadOnlyAddressBook> readAddressBook()
+    +void saveAddressBook(ReadOnlyAddressBook)
+}
 
-Storage -left-|> UserPrefsStorage
-Storage -right-|> AddressBookStorage
+class JsonUserPrefsStorage {
+    -Path filePath
+    +Optional<UserPrefs> readUserPrefs()
+    +void saveUserPrefs(ReadOnlyUserPrefs)
+}
 
-JsonUserPrefsStorage .up.|> UserPrefsStorage
-JsonAddressBookStorage .up.|> AddressBookStorage
-JsonAddressBookStorage ..> JsonSerializableAddressBook
-JsonSerializableAddressBook --> "*" JsonAdaptedClient
-JsonAdaptedClient --> "*" JsonAdaptedTag
+Storage <|.. AddressBookStorage
+Storage <|.. UserPrefsStorage
+Storage <|-- StorageManager
+
+AddressBookStorage <|.. JsonAddressBookStorage
+UserPrefsStorage <|.. JsonUserPrefsStorage
+
+StorageManager --> AddressBookStorage
+StorageManager --> UserPrefsStorage
 
 @enduml

@@ -1,38 +1,87 @@
 @startuml
-!include style.puml
-skinparam arrowThickness 1.1
-skinparam arrowColor LOGIC_COLOR_T4
-skinparam classBackgroundColor LOGIC_COLOR
 
-Class "{abstract}\nCommand" as Command
-Class XYZCommand
+package "logic.parser" {
+  interface Parser<T> {
+    +T parse(String args) throws ParseException
+  }
 
-package "Parser classes"{
-Class "<<interface>>\nParser" as Parser
-Class AddressBookParser
-Class XYZCommandParser
-Class CliSyntax
-Class ParserUtil
-Class ArgumentMultimap
-Class ArgumentTokenizer
-Class Prefix
+  class AddressBookParser {
+    -Pattern BASIC_COMMAND_FORMAT
+    -Logger logger
+    +Command parseCommand(String userInput)
+  }
+
+  class ArgumentMultimap {
+    -Map<Prefix, List<String>> argMultimap
+    +void put(Prefix, String)
+    +Optional<String> getValue(Prefix)
+    +List<String> getAllValues(Prefix)
+    +String getPreamble()
+    +void verifyNoDuplicatePrefixesFor(Prefix...)
+  }
+
+  class ArgumentTokenizer {
+    +static ArgumentMultimap tokenize(String argsString, Prefix...)
+  }
+
+  class CliSyntax {
+    +PREFIX_NAME: Prefix
+    +PREFIX_PHONE: Prefix
+    +PREFIX_EMAIL: Prefix
+    +PREFIX_ADDRESS: Prefix
+    +PREFIX_TAG: Prefix
+    +PREFIX_PREFERENCE: Prefix
+    +PREFIX_FREQUENCY: Prefix
+    +PREFIX_PRIORITY: Prefix
+  }
+
+  class AddCommandParser {
+    +AddCommand parse(String args)
+  }
+
+  class EditCommandParser {
+    +EditCommand parse(String args)
+  }
+
+  class DeleteCommandParser {
+    +DeleteCommand parse(String args)
+  }
+
+  class DescribeCommandParser {
+    +DescribeCommand parse(String args)
+  }
+
+  class ExpandCommandParser {
+    +ExpandCommand parse(String args)
+  }
 }
 
-Class HiddenOutside #FFFFFF
-HiddenOutside ..> AddressBookParser
 
-AddressBookParser .down.> XYZCommandParser: <<create>>
+Parser <|.. AddCommandParser
+Parser <|.. EditCommandParser
+Parser <|.. DeleteCommandParser
+Parser <|.. DescribeCommandParser
+Parser <|.. ExpandCommandParser
 
-XYZCommandParser ..> XYZCommand : <<create>>
-AddressBookParser ..> Command : <<use>>
-XYZCommandParser .up.|> Parser
-XYZCommandParser ..> ArgumentMultimap
-XYZCommandParser ..> ArgumentTokenizer
-ArgumentTokenizer .left.> ArgumentMultimap
-XYZCommandParser ..> CliSyntax
-CliSyntax ..> Prefix
-XYZCommandParser ..> ParserUtil
-ParserUtil .down.> Prefix
-ArgumentTokenizer .down.> Prefix
-XYZCommand -up-|> Command
+AddCommandParser --> ArgumentMultimap
+AddCommandParser --> ArgumentTokenizer
+AddCommandParser --> CliSyntax
+AddCommandParser --> ParserUtil
+
+EditCommandParser --> ArgumentMultimap
+EditCommandParser --> ArgumentTokenizer
+EditCommandParser --> CliSyntax
+EditCommandParser --> ParserUtil
+
+DeleteCommandParser --> ParserUtil
+DescribeCommandParser --> ParserUtil
+ExpandCommandParser --> ParserUtil
+
+AddressBookParser --> AddCommandParser
+AddressBookParser --> EditCommandParser
+AddressBookParser --> DeleteCommandParser
+AddressBookParser --> DescribeCommandParser
+AddressBookParser --> ExpandCommandParser
+
 @enduml
+
