@@ -1,0 +1,89 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":RankCommandParser" as RankCommandParser LOGIC_COLOR
+participant "r:RankCommand" as RankCommand LOGIC_COLOR
+participant "cr:CommandResult" as CommandResult LOGIC_COLOR
+participant "nc:NameComparator" as NameComparator LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("rank name")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("rank name")
+activate AddressBookParser
+
+create RankCommandParser
+AddressBookParser -> RankCommandParser
+activate RankCommandParser
+
+RankCommandParser --> AddressBookParser
+deactivate RankCommandParser
+
+AddressBookParser -> RankCommandParser : parse("name")
+activate RankCommandParser
+
+RankCommandParser -> RankCommandParser : parseRankKeywords("name")
+activate RankCommandParser
+
+create NameComparator
+RankCommandParser -> NameComparator
+activate NameComparator
+
+NameComparator --> RankCommandParser :
+deactivate NameComparator
+RankCommandParser --> RankCommandParser
+
+deactivate RankCommandParser
+
+create RankCommand
+RankCommandParser -> RankCommand : RankCommand(nc)
+activate RankCommand
+
+RankCommand --> RankCommandParser :
+deactivate RankCommand
+
+RankCommandParser --> AddressBookParser : r
+deactivate RankCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+RankCommandParser -[hidden]-> AddressBookParser
+destroy RankCommandParser
+
+AddressBookParser --> LogicManager : r
+deactivate AddressBookParser
+
+LogicManager -> RankCommand : execute(m)
+activate RankCommand
+
+RankCommand -> Model : sortFilteredClientList(nc)
+activate Model
+
+Model --> RankCommand
+deactivate Model
+
+create CommandResult
+RankCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> RankCommand
+deactivate CommandResult
+
+RankCommand --> LogicManager : r
+deactivate RankCommand
+
+RankCommand -[hidden]-> RankCommandParser
+destroy RankCommand
+
+[<--LogicManager
+deactivate LogicManager
+
+@enduml
