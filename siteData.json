@@ -119,6 +119,7 @@
         "locating-clients-find": "Locating clients: find",
         "deleting-a-client-delete": "Deleting a client : delete",
         "expand-client-view-expand": "Expand Client View: expand",
+        "filtering-clients-filter": "Filtering clients : filter",
         "ranking-clients-rank": "Ranking clients : rank",
         "clearing-all-entries-clear": "Clearing all entries : clear",
         "exiting-the-program-exit": "Exiting the program : exit",
