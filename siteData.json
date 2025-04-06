@@ -63,7 +63,8 @@
         "appendix-instructions-for-manual-testing": "Appendix: Instructions for manual testing",
         "launch-and-shutdown": "Launch and shutdown",
         "deleting-a-client": "Deleting a client",
-        "saving-data": "Saving data",
+        "filtering-a-client-s-product-preference-or-priority": "Filtering a client's product preference or priority",
+        "ranking-the-clients": "Ranking the clients",
         "appendix-planned-enhancements": "Appendix: Planned Enhancements"
       },
       "headingKeywords": {}

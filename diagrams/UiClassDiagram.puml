@@ -3,6 +3,14 @@
 skinparam arrowThickness 1.1
 skinparam arrowColor UI_COLOR_T4
 skinparam classBackgroundColor UI_COLOR
+skinparam classBorderColor RANK_COLOR_T1
+skinparam classStereotypeFontColor RANK_COLOR_T1
+
+skinparam class {
+  BackgroundColor<<hidden>> #FFFFFF
+  BorderColor<<hidden>> #FFFFFF
+  StereotypeFontColor<<hidden>> White
+}
 
 package UI <<Rectangle>>{
 Class "<<interface>>\nUi" as Ui
@@ -19,14 +27,14 @@ Class CommandBox
 }
 
 package Model <<Rectangle>> {
-Class HiddenModel #FFFFFF
+    class HiddenModel <<hidden>>
 }
 
 package Logic <<Rectangle>> {
-Class HiddenLogic #FFFFFF
+    class HiddenLogic <<hidden>>
 }
 
-Class HiddenOutside #FFFFFF
+Class HiddenOutside <<hidden>>
 HiddenOutside ..> Ui
 
 UiManager .left.|> Ui
@@ -39,18 +47,22 @@ MainWindow --> "0..1" ClientDetailPanel
 MainWindow *-down-> "1" StatusBarFooter
 MainWindow --> "0..1" HelpWindow
 
-MainWindow -left-|> "UiPart<Stage>" as MainWindowUiPart
-HelpWindow --|> "UiPart<Stage>" as HelpWindowUiPart
-ResultDisplay --|> "UiPart<Region>" as ResultDisplayUiPart
-CommandBox --|> "UiPart<Region>" as CommandBoxUiPart
-ClientListPanel --|> "UiPart<Region>" as ClientListPanelUiPart
-ClientCard --|> "UiPart<Region>" as ClientCardUiPart
-ClientDetailPanel --|> "UiPart<Region>" as ClientDetailPanelUiPart
-StatusBarFooter --|> "UiPart<Region>" as StatusBarFooterUiPart
+
+class "UiPart<Stage>" as UiStage
+class "UiPart<Region>" as UiRegion
+
+MainWindow -left-|> UiStage
+HelpWindow --|> UiStage
+ResultDisplay --|> UiRegion
+CommandBox --|> UiRegion
+ClientListPanel --|> UiRegion
+ClientCard --|> UiRegion
+ClientDetailPanel --|> UiRegion
+StatusBarFooter --|> UiRegion
 
 ClientListPanel -down-> "*" ClientCard
-ClientCard ..> Model
-ClientDetailPanel ..> Model
+ClientCard .down.> Model
+ClientDetailPanel .down.> Model
 
 note bottom of UiPart
   T = Stage (Windows) or Region (Components)
