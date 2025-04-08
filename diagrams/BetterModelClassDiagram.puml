@@ -18,4 +18,7 @@ Client *--> Name
 Client *--> Phone
 Client *--> Email
 Client *--> Address
+Client *--> "0..1" ProductPreference
+Client *--> "0..1" Priority
+Client *--> "0..1" Description
 @enduml
