@@ -13,7 +13,12 @@
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+ClientConnect is an AddressBook which is built upon [**AddressBook3**](https://github.com/se-edu/addressbook-level3/) <br>
+The app utilizes the following third-party libraries:
+* **JavaFX**: ClientConnect's main GUI library
+* **JUnit**: Tests functional code
+* **Jackson**: Stores data on local machine
+With the help of Generative AI to improve the quality of test codes and JavaDoc comments.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -35,7 +40,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2425S2-CS2103T-W13-2/tp/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2425S2-CS2103T-W13-2/tp/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -67,13 +72,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2425S2-CS2103T-W13-2/tp/tree/master/src/main/java/seedu/address/ui/Ui.java)
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `ClientListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2425S2-CS2103T-W13-2/tp/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2425S2-CS2103T-W13-2/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -84,7 +89,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2425S2-CS2103T-W13-2/tp/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -122,9 +127,9 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2425S2-CS2103T-W13-2/tp/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<puml src="diagrams/ModelClassDiagram.puml" width="450" />
+<puml src="diagrams/ModelClassDiagram.puml" width="500" />
 
 
 The `Model` component,
@@ -138,14 +143,14 @@ The `Model` component,
 
 **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Client` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Client` needing their own `Tag` objects.<br>
 
-<puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
+<puml src="diagrams/BetterModelClassDiagram.puml" width="475" />
 
 </box>
 
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2425S2-CS2103T-W13-2/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
@@ -186,7 +191,6 @@ Here's the sequence diagram that shows the flow of the execution for the command
 
 <puml src="diagrams/RankSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `rank name` Command" />
 
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -205,7 +209,7 @@ Here's the sequence diagram that shows the flow of the execution for the command
 
 **Target user profile**:
 
-* salespeople who wish to know their users' preferences better
+* salespeople who wish to know their clients' preferences better
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
@@ -419,13 +423,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * **Client**: The customers who the salesperson (also user of this application) is selling products to.
 * **Command**: A one-line instruction typed into the application by user.
-* **Contact detail**: Including contact names, phone numbers, addresses and optionally tags, etc.
+* **Contact detail**: Including contact names, phone numbers, emails, addresses and optionally tags, etc.
 * **CSV file**: Comma-separated values, a plain text file format that stores data in a table-like structure. Can be opened using Microsoft Excel or be imported to other supported applications.
 * **Main features**: The main features of this application, including _list_, _add_, _delete_, etc.
-* **Mainstream OS**: Windows, Linux, Unix, macOS
+* **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Salesperson**: Anyone who is selling things and has the need to note down clients' information.
 * **Private contact detail**: A contact detail that is not meant to be shared with others
-* **Product Preference**: A specific product or category of products that a client is interested in.
+* **Product Preference**: The most purchased product of the client of interest.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -519,8 +523,15 @@ _Team size: 5_
 
 1. **Support multiple product preferences for each client**: The current client only has one product preference and its frequency. We plan to make every client has a list of product preferences with its corresponding frequency, to meet a more realistic scenario.
 
-2. **New commands to work with product preference**: Once we have multiple product preferences for each client, we would also like to add a command `AddProductPreference` to add product preferences cumulatively for one client, and a command `DeleteProductPreference` to delete a certain product preference and its frequency for one client.
+2. **New commands to work with product preference**: The current app only provides some basic ways to work with product preference, which can be inconvinient at times. We plan to add more commands such as `AddProductPreference` to add product preferences cumulatively for one client, `DeleteProductPreference` to delete a certain product preference, and `EditProductPreference` to conveniently edit a product preference or its frequency for one client.
 
 3. **New commands to add tags cumulatively**: For the same reason, now we can only edit tags through `edit` command, and if we want to add a new tag to a client without touching existing tags, we will also have to type out all the existing tags in the command, which is very inconvenient and unpractical. We can add new command `AddTag` to add new tags cumulatively to a client, and another new command `DeleteTag` to delete a certain existing tag for a client.
 
 4. **Rank clients by product frequency of a certain product preference**: We want our `rank` command to be more useful, adding its ability to rank in many ways, including rank clients based on the frequency of a certain product.
+
+5. **Search by Contact Information**: Our app currently has no way of finding a client by his contact details. We plan to improve our find feature to allow users to directly search for a client using their phone number or email address for quicker lookup.
+
+6. **Implement Robust Contact Information Verification**: Our app currently only imposes basic rules on contact details like phones and emails. We plan to incorporate third-party APIs to send verification codes to phone numbers and email addresses upon entry, confirming their validity and reachability.
+
+7. **Flexible Client Creation**: The app currently requires all fields for a client to be added, which can be inconvenient or irrelevant at times. We plan to modify the client addition process to enhance user convenience. Instead of requiring all fields (name, phone, email, address), we require only one of these primary contact details to create a new client entry.
+
