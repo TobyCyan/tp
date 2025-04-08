@@ -57,7 +57,7 @@ The *Sequence Diagram* below shows how the components interact with each other f
 Each of the four main components (also shown in the diagram above),
 
 * defines its *API* in an `interface` with the same name as the Component.
-* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point.
+* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point).
 
 For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
@@ -113,8 +113,7 @@ The `Logic` component is designed with extensibility in mind. To support a new c
 - Create a matching parser (e.g., `SortCommandParser`) that implements the `Parser<T>` interface
 - Add a corresponding `case` to the `AddressBookParser#parseCommand` method
 
-This modular design makes it straightforward to extend the system while maintaining clarity and separation of concerns.
-) that are used for parsing a user command:
+This modular design makes it straightforward to extend the system while maintaining clarity and separation of concerns that are used for parsing a user command:
 
 <puml src="diagrams/ParserClasses.puml" width="600"/>
 
@@ -186,11 +185,6 @@ Given below is an example usage scenario and how the rank mechanism behaves at e
 Here's the sequence diagram that shows the flow of the execution for the command `rank name`.
 
 <puml src="diagrams/RankSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `rank name` Command" />
-
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -303,7 +297,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 4.  ClientConnect validates the command. 
 5.  ClientConnect retrieves the details of the client at the specified index. 
 6.  ClientConnect deletes the client's details from the address book. 
-7.  ClientConnect displays a success message:”Deleted: <Info of the deleted client>”
+7.  ClientConnect displays a success message: “Deleted: &lt;Info of the deleted client&gt;”
 
 
     Use case ends.
@@ -423,13 +417,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-* **Client**: The customers who the salesclient (also user of this application) is selling products to.
+* **Client**: The customers who the salesperson (also user of this application) is selling products to.
 * **Command**: A one-line instruction typed into the application by user.
-* **Contact detail**: Including contact names, phone numbers, adresses and optionally tags, etc.
+* **Contact detail**: Including contact names, phone numbers, addresses and optionally tags, etc.
 * **CSV file**: Comma-separated values, a plain text file format that stores data in a table-like structure. Can be opened using Microsoft Excel or be imported to other supported applications.
 * **Main features**: The main features of this application, including _list_, _add_, _delete_, etc.
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Salesclient**: Anyone who is selling things and has the need to note down clients' information.
+* **Mainstream OS**: Windows, Linux, Unix, macOS
+* **Salesperson**: Anyone who is selling things and has the need to note down clients' information.
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 * **Product Preference**: A specific product or category of products that a client is interested in.
 
@@ -529,4 +523,4 @@ _Team size: 5_
 
 3. **New commands to add tags cumulatively**: For the same reason, now we can only edit tags through `edit` command, and if we want to add a new tag to a client without touching existing tags, we will also have to type out all the existing tags in the command, which is very inconvenient and unpractical. We can add new command `AddTag` to add new tags cumulatively to a client, and another new command `DeleteTag` to delete a certain existing tag for a client.
 
-4. **Rank clients by product frequency of a certain product preference**: We want our `rank` command to be more useful, adding it's ability to rank in many ways, including rank clients based on the frequency of a certain product.
+4. **Rank clients by product frequency of a certain product preference**: We want our `rank` command to be more useful, adding its ability to rank in many ways, including rank clients based on the frequency of a certain product.
